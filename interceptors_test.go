@@ -10,9 +10,7 @@ import (
 )
 
 func customInterceptor() grpc.UnaryServerInterceptor {
-
 	return func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (_ interface{}, err error) {
-
 		return nil, nil
 	}
 }
@@ -30,27 +28,25 @@ func Test_getMethod(t *testing.T) {
 }
 
 func Test_GetInterceptors(t *testing.T) {
-	//we will assert the types for now
-	//as there is no build, we can find any compilation issue here
+	// we will assert the types for now
+	// as there is no build, we can find any compilation issue here
 
-	//with default options
+	// with default options
 	logger := log.Logger
 	ints := NewInterceptor("my-service", logger)
 
 	serverOptions := ints.Get()
 
 	if got, ok := serverOptions.(grpc.ServerOption); !ok {
-
 		t.Fatalf("GetInterceptors :  type missmatch, expected 'grpc.ServerOption', got '%s'", got)
 	}
 
-	//with default options
+	// with default options
 	ints = NewInterceptor("my-service", logger, WithInterecptor(customInterceptor()))
 
 	serverOptions = ints.Get()
 
 	if got, ok := serverOptions.(grpc.ServerOption); !ok {
-
 		t.Fatalf("GetInterceptors :  type missmatch, expected 'grpc.ServerOption', got '%s'", got)
 	}
 }

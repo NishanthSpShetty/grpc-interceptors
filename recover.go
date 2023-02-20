@@ -11,13 +11,12 @@ import (
 )
 
 func recoveryInterceptor(in *interceptor, logger zerolog.Logger) grpc.UnaryServerInterceptor {
-
 	return func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (_ interface{}, err error) {
 		panicked := true
 
 		defer func() {
 			if r := recover(); r != nil || panicked {
-				//log error details and stack trace
+				// log error details and stack trace
 				methodName := getMethod(info)
 				logger.Err(err).Str("method", methodName).Str("stacktrace", string(debug.Stack())).Msg("failed to handle the request [PANIC]")
 				err = status.Errorf(codes.Internal, "%v in call to method '%s'", r, methodName)

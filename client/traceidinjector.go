@@ -20,9 +20,7 @@ func generateFallBackTraceId() string {
 // TraceIdInjectInterceptor inject trace id present in the request context to grpc request metadata,
 // Set the trace id in content using context.WithValue("trace-id", your_awesome_trace_id)
 func TraceIdInjectInterceptor(logger zerolog.Logger) grpc.UnaryClientInterceptor {
-
 	return func(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
-
 		traceid, ok := ctx.Value(TRACE_ID).(string)
 		if !ok {
 			traceid = generateFallBackTraceId()

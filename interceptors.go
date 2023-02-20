@@ -23,7 +23,7 @@ type interceptor struct {
 }
 
 func (i *interceptor) skipLog(method string) bool {
-	//quick good lookup function
+	// quick good lookup function
 	for _, m := range i.skipMethods {
 		if m == method {
 			return true
@@ -54,10 +54,9 @@ func WithSkipMethod(methods []string) InterceptorOption {
 }
 
 func NewInterceptor(service string, logger zerolog.Logger, options ...InterceptorOption) Interceptor {
-
 	in := &interceptor{}
 
-	//apply default interceptors
+	// apply default interceptors
 	WithInterecptor(kitgrpc.Interceptor)(in)
 	WithInterecptor(traceIdReader(in, logger))(in)
 	WithInterecptor(loggingInterceptor(in, logger))(in)

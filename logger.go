@@ -10,7 +10,6 @@ import (
 )
 
 func loggingInterceptor(in *interceptor, logger zerolog.Logger) grpc.UnaryServerInterceptor {
-
 	return func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (_ interface{}, err error) {
 		// log request and response data
 
