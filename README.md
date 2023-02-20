@@ -1,4 +1,4 @@
-# Interceptors
+# grpcInterceptors
 
 
 collection of gRPC interceptors 
@@ -12,7 +12,7 @@ It injects the following interceptor
 ## Installation
 
 ```
-    go get -u github.com/NishanthSpShetty/interceptors@v0.1.0
+    go get -u github.com/NishanthSpShetty/grpc-interceptors@v0.1.0
 ```
 
 
