@@ -1,6 +1,6 @@
 GO_VERSION=1.17
 
-deps:
+tidy:
 	go mod tidy -compat=$(GO_VERSION)
 
 test:

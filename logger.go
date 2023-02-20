@@ -15,26 +15,30 @@ func loggingInterceptor(in *interceptor, logger zerolog.Logger) grpc.UnaryServer
 		// log request and response data
 
 		begin := time.Now()
-		request := fmt.Sprintf("%+v", req)
 		method := getMethod(info)
+		logger = logger.With().Str("method", method).Logger()
 
 		skip := in.skipLog(method)
-		msg := fmt.Sprintf("call to %s", method)
 
-		args := []interface{}{msg, "method", method}
 		if !skip {
-			arg = append(args, "request", request)
+			request := fmt.Sprintf("%+v", req)
+			logger = logger.With().Str("request", request).Logger()
 		}
 
-		logger.Info(ctx, args...)
+		logger.Info().Send()
 		resp, err := handler(ctx, req)
 
-		args = []interface{}{msg, "method", method, "error", err, "took", time.Since(begin)}
+		logger = logger.With().Dur("took", time.Since(begin)).Logger()
 		if !skip {
-			args = append(args, "request", request, "response", resp)
+			logger = logger.With().Interface("response", resp).Logger()
 		}
 
-		logger.Info(ctx, args...)
+		if err != nil {
+			logger.Err(err).Send()
+		} else {
+			logger.Info().Send()
+		}
+
 		return resp, err
 	}
 }

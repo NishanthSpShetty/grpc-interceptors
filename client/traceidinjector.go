@@ -25,8 +25,8 @@ func TraceIdInjectInterceptor(logger zerolog.Logger) grpc.UnaryClientInterceptor
 
 		traceid, ok := ctx.Value(TRACE_ID).(string)
 		if !ok {
-			logger.Warn().Str("traceid", ctx.Value(TRACE_ID)).Msg("invalid traceid found in context. generating fallback id")
 			traceid = generateFallBackTraceId()
+			logger.Warn().Str("traceid", traceid).Msg("invalid traceid found in context. generated fallback id")
 		}
 
 		ctx = metadata.AppendToOutgoingContext(ctx, TRACE_ID, traceid)

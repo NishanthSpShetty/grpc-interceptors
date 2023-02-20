@@ -4,7 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
+
 	"google.golang.org/grpc"
 )
 
@@ -33,7 +34,7 @@ func Test_GetInterceptors(t *testing.T) {
 	//as there is no build, we can find any compilation issue here
 
 	//with default options
-	logger := zerolog.Logger
+	logger := log.Logger
 	ints := NewInterceptor("my-service", logger)
 
 	serverOptions := ints.Get()
