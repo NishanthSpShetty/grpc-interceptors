@@ -20,8 +20,6 @@ example
     go get -u github.com/NishanthSpShetty/grpc-interceptors@v0.3.0
 ```
 
-> can update it in your profile settings (.bashrc, .zshrc)
-
 ## Usage
 
 Register interceptors when setting up gRPC server in application
