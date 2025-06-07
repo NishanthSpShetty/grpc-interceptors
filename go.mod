@@ -3,16 +3,16 @@ module github.com/NishanthSpShetty/grpc-interceptors
 go 1.17
 
 require (
+	github.com/NishanthSpShetty/log v0.0.0-20250607105041-160e63f2c876
 	github.com/go-kit/kit v0.11.0
 	github.com/gogo/status v1.1.0
 	github.com/google/uuid v1.1.2
-	github.com/netbookai/log v0.4.0
 	github.com/rs/zerolog v1.21.0
 	google.golang.org/grpc v1.44.0
 )
 
 require (
-	github.com/go-logfmt/logfmt v0.5.0 // indirect
+	github.com/go-logfmt/logfmt v0.6.0 // indirect
 	github.com/gogo/googleapis v0.0.0-20180223154316-0cd9801be74a // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/NishanthSpShetty/grpc-interceptors/client"
-	"github.com/netbookai/log/loggers"
+	"github.com/NishanthSpShetty/log/loggers"
 	"github.com/rs/zerolog"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"

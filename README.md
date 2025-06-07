@@ -12,9 +12,13 @@ It injects the following interceptor
 ## Installation
 
 ```
-    go get -u github.com/NishanthSpShetty/grpc-interceptors@v0.1.0
+    go get -u github.com/NishanthSpShetty/grpc-interceptors@<release-version>
 ```
 
+example
+```
+    go get -u github.com/NishanthSpShetty/grpc-interceptors@v0.3.0
+```
 
 > can update it in your profile settings (.bashrc, .zshrc)
 
