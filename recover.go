@@ -2,12 +2,11 @@ package interceptors
 
 import (
 	"context"
+	"fmt"
 	"runtime/debug"
 
-	"github.com/gogo/status"
 	"github.com/rs/zerolog"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
 )
 
 func recoveryInterceptor(in *interceptor, logger zerolog.Logger) grpc.UnaryServerInterceptor {
@@ -18,8 +17,8 @@ func recoveryInterceptor(in *interceptor, logger zerolog.Logger) grpc.UnaryServe
 			if r := recover(); r != nil || panicked {
 				// log error details and stack trace
 				methodName := getMethod(info)
+				err = fmt.Errorf("%v in call to method '%s'", r, methodName)
 				logger.Err(err).Str("method", methodName).Str("stacktrace", string(debug.Stack())).Msg("failed to handle the request [PANIC]")
-				err = status.Errorf(codes.Internal, "%v in call to method '%s'", r, methodName)
 			}
 		}()
 
