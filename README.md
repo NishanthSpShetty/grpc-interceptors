@@ -1,18 +1,18 @@
-# grpcInterceptors
+# gRPC Interceptors
 
+A collection of gRPC interceptors for Go applications.
 
-collection of gRPC interceptors 
+This package provides the following interceptors:
 
-It injects the following interceptor
-
-* kit Interceptor - inject method name to the context
-* loggingInterceptor - log request and response data, duration of the call
-* recoveryInterceptor - recover from any API panics gracefully and logs error
+*   **Kit Interceptor**: Injects the method name into the context.
+*   **Logging Interceptor**: Logs request and response data, along with the duration of the call.
+*   **Recovery Interceptor**: Gracefully recovers from API panics and logs the error with a stack trace.
+*   **Trace ID Reader**: Reads trace IDs from metadata for request tracking.
 
 ## Installation
 
-```
-    go get -u github.com/NishanthSpShetty/grpc-interceptors@<release-version>
+```bash
+go get -u github.com/NishanthSpShetty/grpc-interceptors
 ```
 
 example

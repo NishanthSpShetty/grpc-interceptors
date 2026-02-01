@@ -19,28 +19,25 @@ type Interceptor interface {
 
 type interceptor struct {
 	options     []grpc.UnaryServerInterceptor
-	skipMethods []string
+	skipMethods map[string]struct{}
 }
 
 func (i *interceptor) skipLog(method string) bool {
 	// quick good lookup function
-	for _, m := range i.skipMethods {
-		if m == method {
-			return true
-		}
-	}
-	return false
+	_, ok := i.skipMethods[method]
+	return ok
 }
 
 type InterceptorOption func(in *interceptor)
 
-func WithInterecptor(userInterceptor grpc.UnaryServerInterceptor) InterceptorOption {
+// WithInterceptor appends a user defined interceptor to the chain
+func WithInterceptor(userInterceptor grpc.UnaryServerInterceptor) InterceptorOption {
 	return func(in *interceptor) {
 		in.options = append(in.options, userInterceptor)
 	}
 }
 
-// Get return the unary interceptos composing of all default and user options
+// Get return the unary interceptors composing of all default and user options
 func (in *interceptor) Get() grpc.ServerOption {
 	return grpc.ChainUnaryInterceptor(
 		in.options...,
@@ -49,7 +46,10 @@ func (in *interceptor) Get() grpc.ServerOption {
 
 func WithSkipMethod(methods []string) InterceptorOption {
 	return func(in *interceptor) {
-		in.skipMethods = methods
+		in.skipMethods = make(map[string]struct{}, len(methods))
+		for _, m := range methods {
+			in.skipMethods[m] = struct{}{}
+		}
 	}
 }
 
@@ -57,10 +57,10 @@ func NewInterceptor(service string, logger zerolog.Logger, options ...Intercepto
 	in := &interceptor{}
 
 	// apply default interceptors
-	WithInterecptor(kitgrpc.Interceptor)(in)
-	WithInterecptor(traceIdReader(in, logger))(in)
-	WithInterecptor(loggingInterceptor(in, logger))(in)
-	WithInterecptor(recoveryInterceptor(in, logger))(in)
+	WithInterceptor(kitgrpc.Interceptor)(in)
+	WithInterceptor(traceIdReader(in, logger))(in)
+	WithInterceptor(loggingInterceptor(in, logger))(in)
+	WithInterceptor(recoveryInterceptor(in, logger))(in)
 
 	for _, option := range options {
 		option(in)

@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/rs/zerolog"
@@ -13,7 +14,10 @@ import (
 const TRACE_ID = "trace-id"
 
 func generateFallBackTraceId() string {
-	id, _ := uuid.NewRandom()
+	id, err := uuid.NewRandom()
+	if err != nil {
+		return fmt.Sprintf("fallback-%d", time.Now().UnixNano())
+	}
 	return fmt.Sprintf("fallback-%s", id)
 }
 
