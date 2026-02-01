@@ -17,7 +17,7 @@ go get -u github.com/NishanthSpShetty/grpc-interceptors
 
 example
 ```
-    go get -u github.com/NishanthSpShetty/grpc-interceptors@v0.3.0
+    go get -u github.com/NishanthSpShetty/grpc-interceptors@v0.4.1
 ```
 
 ## Usage
